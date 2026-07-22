@@ -78,12 +78,6 @@
       <motorType>velocity</motorType>
     </plugin>
 
-    <!-- GAZEBO SENSOR SYSTEM PLUGIN (Essenziell für GPU-LiDAR & IMU) -->
-    <plugin filename="gz-sim-sensors-system"
-      name="gz::sim::systems::Sensors">
-      <render_engine>ogre2</render_engine>
-    </plugin>
-
     <!-- 3D GPU LIDAR MOUNT & IMU -->
     <link name="lidar_link">
       <pose>0 0 0.1 0 0 0</pose>
@@ -101,7 +95,6 @@
         <update_rate>10</update_rate>
         <visualize>true</visualize>
         <topic>/livox/lidar_sim</topic>
-        <gz_frame_id>lidar_link</gz_frame_id>
         <lidar>
           <scan>
             <horizontal>
@@ -113,8 +106,8 @@
             <vertical>
               <samples>32</samples>
               <resolution>1</resolution>
-              <min_angle>-0.122</min_angle> <!-- ca. 7 Grad nach unten -->
-              <max_angle>0.907</max_angle>  <!-- ca. 52 Grad nach oben -->
+              <min_angle>-0.122</min_angle>
+              <max_angle>0.907</max_angle>
             </vertical>
           </scan>
           <range>
@@ -125,12 +118,11 @@
         </lidar>
       </sensor>
 
-      <!-- INTERNE LIVOX IMU -->
+      <!-- INTERNE IMU -->
       <sensor name="livox_imu" type="imu">
         <always_on>true</always_on>
         <update_rate>200</update_rate>
         <topic>/livox/imu_sim</topic>
-        <gz_frame_id>lidar_link</gz_frame_id>
       </sensor>
 
     </link>
