@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sdf version='1.9'>
   <model name='x500'>
+    <!-- Basis-Modell laden -->
     <include merge='true'>
       <uri>model://x500_base</uri>
     </include>
 
-    <!-- MOTOR PLUGINS -->
-    <plugin filename="gz-sim-multicopter-motor-model-system"
-      name="gz::sim::systems::MulticopterMotorModel">
+    <!-- Motor Plugins (Standard) -->
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
       <jointName>rotor_0_joint</jointName>
       <linkName>rotor_0</linkName>
       <turningDirection>ccw</turningDirection>
@@ -23,9 +23,7 @@
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
       <motorType>velocity</motorType>
     </plugin>
-
-    <plugin filename="gz-sim-multicopter-motor-model-system"
-      name="gz::sim::systems::MulticopterMotorModel">
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
       <jointName>rotor_1_joint</jointName>
       <linkName>rotor_1</linkName>
       <turningDirection>ccw</turningDirection>
@@ -41,9 +39,7 @@
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
       <motorType>velocity</motorType>
     </plugin>
-
-    <plugin filename="gz-sim-multicopter-motor-model-system"
-      name="gz::sim::systems::MulticopterMotorModel">
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
       <jointName>rotor_2_joint</jointName>
       <linkName>rotor_2</linkName>
       <turningDirection>cw</turningDirection>
@@ -59,9 +55,7 @@
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
       <motorType>velocity</motorType>
     </plugin>
-
-    <plugin filename="gz-sim-multicopter-motor-model-system"
-      name="gz::sim::systems::MulticopterMotorModel">
+    <plugin filename="gz-sim-multicopter-motor-model-system" name="gz::sim::systems::MulticopterMotorModel">
       <jointName>rotor_3_joint</jointName>
       <linkName>rotor_3</linkName>
       <turningDirection>cw</turningDirection>
@@ -78,9 +72,9 @@
       <motorType>velocity</motorType>
     </plugin>
 
-    <!-- 3D GPU LIDAR MOUNT & IMU -->
-    <link name="lidar_link">
-      <pose>0 0 0.1 0 0 0</pose>
+    <!-- UNSER NEUER LIVOX MID-360 MOUNT -->
+    <link name="mid360_link">
+      <pose>0 0 0.15 0 0 0</pose>
       <inertial>
         <mass>0.265</mass>
         <inertia>
@@ -88,17 +82,18 @@
         </inertia>
       </inertial>
 
-      <!-- 3D GPU LIDAR -->
-      <sensor name="lidar_3d" type="gpu_lidar">
+      <!-- 3D GPU Lidar -->
+      <sensor name="mid360_lidar" type="gpu_lidar">
         <pose>0 0 0 0 0 0</pose>
         <always_on>true</always_on>
         <update_rate>10</update_rate>
         <visualize>true</visualize>
         <topic>/livox/lidar_sim</topic>
+        <gz_frame_id>mid360_link</gz_frame_id>
         <lidar>
           <scan>
             <horizontal>
-              <samples>1024</samples>
+              <samples>360</samples>
               <resolution>1</resolution>
               <min_angle>-3.14159</min_angle>
               <max_angle>3.14159</max_angle>
@@ -118,18 +113,18 @@
         </lidar>
       </sensor>
 
-      <!-- INTERNE IMU -->
-      <sensor name="livox_imu" type="imu">
+      <!-- Integrierte IMU -->
+      <sensor name="mid360_imu" type="imu">
         <always_on>true</always_on>
         <update_rate>200</update_rate>
         <topic>/livox/imu_sim</topic>
+        <gz_frame_id>mid360_link</gz_frame_id>
       </sensor>
-
     </link>
 
-    <joint name="lidar_joint" type="fixed">
+    <joint name="mid360_joint" type="fixed">
       <parent>base_link</parent>
-      <child>lidar_link</child>
+      <child>mid360_link</child>
     </joint>
 
   </model>
