@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sdf version='1.9'>
   <model name='x500'>
-    <!-- Basis-Modell laden -->
+    <!-- Load the base model -->
     <include merge='true'>
       <uri>model://x500_base</uri>
     </include>
@@ -82,7 +82,7 @@
         </inertia>
       </inertial>
 
-      <!-- GPU Lidar Sensor (Mid-360 Konfiguration) -->
+      <!-- GPU Lidar Sensor (Mid-360 Configuration) -->
       <sensor name="gpu_lidar" type="gpu_lidar">
         <pose relative_to="mid360_link">0 0 0 0 0 0</pose>
         <topic>/livox/lidar_sim</topic>
@@ -90,21 +90,21 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>720</samples>      <!-- Mid-360 0.5° Auflösung -->
+              <samples>720</samples>      <!-- Mid-360 0.5° resolution -->
               <resolution>1</resolution>
               <min_angle>-3.14156</min_angle>  <!-- 360° HFOV -->
               <max_angle>3.14156</max_angle>
             </horizontal>
             <vertical>
-              <samples>40</samples>       <!-- Mid-360 Punktdichte -->
+              <samples>40</samples>       <!-- Mid-360 point density -->
               <resolution>1</resolution>
               <min_angle>0.0</min_angle>      <!-- 59° VFOV -->
-              <max_angle>0.9774</max_angle>   <!-- 0° bis 59° nach oben -->
+              <max_angle>0.9774</max_angle>   <!-- 0° to 59° upward -->
             </vertical>
           </scan>
           <range>
-            <min>0.01</min>                 <!-- Mid-360 minimale Reichweite -->
-            <max>40.0</max>                 <!-- Mid-360 maximale Reichweite -->
+            <min>0.01</min>                 <!-- Mid-360 minimum range -->
+            <max>40.0</max>                 <!-- Mid-360 maximum range -->
             <resolution>0.01</resolution>
           </range>
         </ray>
@@ -112,7 +112,7 @@
         <visualize>true</visualize>
       </sensor>
 
-      <!-- Integrierte IMU -->
+      <!-- Integrated IMU -->
       <sensor name="imu_sensor" type="imu">
         <always_on>true</always_on>
         <update_rate>200</update_rate>
@@ -121,7 +121,7 @@
       </sensor>
     </link>
 
-    <!-- Joint zur Drohne -->
+    <!-- Joint to attach the sensor to the drone base -->
     <joint name="mid360_joint" type="fixed">
       <parent>base_link</parent>
       <child>mid360_link</child>
