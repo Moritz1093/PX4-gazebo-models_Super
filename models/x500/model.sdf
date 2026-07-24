@@ -72,7 +72,7 @@
       <motorType>velocity</motorType>
     </plugin>
 
-    <!-- UNSER NEUER LIVOX MID-360 MOUNT -->
+    <!-- Livox MID-360 Mount -->
     <link name="mid360_link">
       <pose>0 0 0.15 0 0 0</pose>
       <inertial>
@@ -82,46 +82,46 @@
         </inertia>
       </inertial>
 
-      <!-- 3D GPU Lidar -->
-      <sensor name="mid360_lidar" type="gpu_lidar">
-        <pose>0 0 0 0 0 0</pose>
-        <always_on>true</always_on>
-        <update_rate>10</update_rate>
-        <visualize>true</visualize>
+      <!-- GPU Lidar Sensor (Mid-360 Konfiguration) -->
+      <sensor name="gpu_lidar" type="gpu_lidar">
+        <pose relative_to="mid360_link">0 0 0 0 0 0</pose>
         <topic>/livox/lidar_sim</topic>
-        <gz_frame_id>mid360_link</gz_frame_id>
-        <lidar>
+        <update_rate>10</update_rate>
+        <ray>
           <scan>
             <horizontal>
-              <samples>360</samples>
+              <samples>720</samples>      <!-- Mid-360 0.5° Auflösung -->
               <resolution>1</resolution>
-              <min_angle>-3.14159</min_angle>
-              <max_angle>3.14159</max_angle>
+              <min_angle>-3.14156</min_angle>  <!-- 360° HFOV -->
+              <max_angle>3.14156</max_angle>
             </horizontal>
             <vertical>
-              <samples>32</samples>
+              <samples>40</samples>       <!-- Mid-360 Punktdichte -->
               <resolution>1</resolution>
-              <min_angle>-0.122</min_angle>
-              <max_angle>0.907</max_angle>
+              <min_angle>0.0</min_angle>      <!-- 59° VFOV -->
+              <max_angle>0.9774</max_angle>   <!-- 0° bis 59° nach oben -->
             </vertical>
           </scan>
           <range>
-            <min>0.1</min>
-            <max>40.0</max>
+            <min>0.01</min>                 <!-- Mid-360 minimale Reichweite -->
+            <max>40.0</max>                 <!-- Mid-360 maximale Reichweite -->
             <resolution>0.01</resolution>
           </range>
-        </lidar>
+        </ray>
+        <always_on>true</always_on>
+        <visualize>true</visualize>
       </sensor>
 
       <!-- Integrierte IMU -->
-      <sensor name="mid360_imu" type="imu">
+      <sensor name="imu_sensor" type="imu">
         <always_on>true</always_on>
         <update_rate>200</update_rate>
+        <visualize>true</visualize>
         <topic>/livox/imu_sim</topic>
-        <gz_frame_id>mid360_link</gz_frame_id>
       </sensor>
     </link>
 
+    <!-- Joint zur Drohne -->
     <joint name="mid360_joint" type="fixed">
       <parent>base_link</parent>
       <child>mid360_link</child>
